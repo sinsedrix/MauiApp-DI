@@ -3,10 +3,17 @@
              x:Class="MauiApp1.MainPage"
              xmlns:local="clr-namespace:MauiApp1"
              BackgroundColor="{DynamicResource SecondaryColor}"
-             x:DataType="local:CounterViewModel">
+             x:DataType="local:CounterViewModel"
+             xmlns:conv="clr-namespace:MauiApp1.Converters">
 
-    <ScrollView Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
-        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,*">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:IntConverter x:Key="intConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ScrollView Padding="30">
+        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
 
             <Label 
                 Text="Hello, World!"
@@ -23,6 +30,7 @@
                 FontSize="18"
                 HorizontalOptions="Center" />
 
+            <!-- -->
             <Label 
                 Grid.Row="2"
                 FontSize="18"
@@ -31,21 +39,56 @@
                 x:Name="CounterLabel"
                 HorizontalOptions="Center" />
 
+
             <Button 
-                Text="Click me"
+                Text="Increment"
                 FontAttributes="Bold"
                 Grid.Row="3"
                 SemanticProperties.Hint="Counts the number of times you click"
-                Command="{Binding ClickedCommand}"
+                Command="{Binding IncrementCommand}"
                 HorizontalOptions="Center" />
 
-            <Image Grid.Row="4"
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                WidthRequest="250"
-                HeightRequest="310"
+            <Entry 
+                Grid.Row="4"
+                FontSize="18"
+                HeightRequest="40"
+                FontAttributes="Bold"
+                Text="{Binding Count, Mode=TwoWay, Converter={StaticResource intConverter}}"
+                Keyboard="Numeric"
+                HorizontalOptions="Center"
+                x:Name="CountEntry" />
+
+            <!-- -->
+            <Label 
+                Grid.Row="5"
+                FontSize="18"
+                FontAttributes="Bold"
+                Text="{Binding Word}"
+                x:Name="WordLabel"
                 HorizontalOptions="Center" />
 
+            <Entry 
+                Grid.Row="6"
+                FontSize="18"
+                HeightRequest="40"
+                FontAttributes="Bold"
+                Text="{Binding Word, Mode=TwoWay}"
+                HorizontalOptions="Center"
+                x:Name="WordEntry"/>
+
+            <Button 
+                Grid.Row="7"
+                Text="Populate"
+                FontAttributes="Bold"
+                Command="{Binding PopulateCommand}"
+                HorizontalOptions="Center" />
+            <!-- -->
+            <Button 
+                Grid.Row="8"
+                Text="Modify entries text"
+                FontAttributes="Bold"
+                Clicked="ModifyEntryText_Clicked"
+                HorizontalOptions="Center" />
         </Grid>
     </ScrollView>
 </ContentPage>
