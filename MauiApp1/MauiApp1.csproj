@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0-ios;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks>net6.0-android</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>MauiApp1</RootNamespace>
@@ -21,6 +21,8 @@
 
 		<!-- Required for C# Hot Reload -->
 		<UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
+    <Platforms>x86;x64</Platforms>
+    <RuntimeIdentifier>android-$(Platform)</RuntimeIdentifier>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -51,7 +53,10 @@
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<OutputType>WinExe</OutputType>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<RuntimeIdentifier>win-$(Platform)</RuntimeIdentifier>
 	</PropertyGroup>
 
+  <PropertyGroup Condition="$(TargetFramework.Contains('-android'))">
+    
+  </PropertyGroup>
 </Project>
