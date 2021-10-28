@@ -11,9 +11,9 @@ namespace MauiApp1.ViewModels
     public class MainViewModel : BindableObject
     {
         ICommand clickedCommand;
-        public ICommand IncrementCommand => clickedCommand ??= new Command(IncrementCount);
+        public ICommand IncrementCommand => clickedCommand ??= new Command(IncrementCount, () => !IsBusy);
         ICommand populateCommand;
-        public ICommand PopulateCommand => populateCommand ??= new Command(Populate);
+        public ICommand PopulateCommand => populateCommand ??= new Command(Populate, () => !IsBusy);
         ICommand getBusyCommand;
         public ICommand GetBusyCommand => getBusyCommand ??= new Command(GetBusy);
 
