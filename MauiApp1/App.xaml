@@ -20,6 +20,11 @@
                 <Setter Property="FontFamily" Value="OpenSansRegular" />
                 <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
                 <Setter Property="Padding" Value="14,10" />
+                <Style.Triggers>
+                    <Trigger TargetType="Button"  Property="IsEnabled" Value="False">
+                        <Setter Property="BackgroundColor" Value="Gray"></Setter>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
         </ResourceDictionary>

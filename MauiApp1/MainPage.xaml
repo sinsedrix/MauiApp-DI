@@ -1,19 +1,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiApp1.MainPage"
-             xmlns:local="clr-namespace:MauiApp1"
+             xmlns:vm="clr-namespace:MauiApp1.ViewModels"
+             xmlns:conv="clr-namespace:MauiApp1.Converters"
              BackgroundColor="{DynamicResource SecondaryColor}"
-             x:DataType="local:CounterViewModel"
-             xmlns:conv="clr-namespace:MauiApp1.Converters">
+             x:Class="MauiApp1.MainPage"
+             x:DataType="vm:MainViewModel"
+             IsBusy="{Binding IsBusy}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:IntConverter x:Key="intConverter" />
+            <conv:InverseBoolConverter x:Key="inverseBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     
     <ScrollView Padding="30">
-        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
+        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
 
             <Label 
                 Text="Hello, World!"
@@ -89,6 +91,21 @@
                 FontAttributes="Bold"
                 Clicked="ModifyEntryText_Clicked"
                 HorizontalOptions="Center" />
+            <!-- -->
+            <Button 
+                Grid.Row="9"
+                FontAttributes="Bold"
+                Command="{Binding GetBusyCommand}"
+                HorizontalOptions="Center"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource inverseBoolConverter}}">
+                <Button.Text>
+                    <Binding Path="IsBusy">
+                        <Binding.Converter>
+                            <conv:BoolToObjectConverter x:TypeArguments="x:String" TrueObject="Busy..." FalseObject="Get busy" />
+                        </Binding.Converter>
+                    </Binding>
+                </Button.Text>
+            </Button>
         </Grid>
     </ScrollView>
 </ContentPage>
